@@ -1,5 +1,5 @@
 const invitados = [
-    { nombre: "Sara Cecarrelli", puestos: 1, idioma: "it" },
+    { nombre: "Sara Ferrotti", puestos: 1, idioma: "it" },
     { nombre: "Gianluca Ceccarrelli", puestos: 1, idioma: "it" },
     { nombre: "Francesco Dall' Ara", puestos: 1, idioma: "it" },
     { nombre: "Martina Ceccarelli", puestos: 1, idioma: "it" },

@@ -15,14 +15,15 @@
 }
 
 body {
-    /* Fondo con la imagen de textura */
-    background-image: url('fotos/Sin\ título\ \(1080\ x\ 2080\ px\).png'); 
+    /* Fondo inicial */
+    background-image: url('https://res.cloudinary.com/dhryyhnig/image/upload/v1770844759/fondo1_vp5ney.png'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
+    /* Transición suave para el cambio de fondo */
+    transition: background-image 1s ease-in-out;
     
-    /* Tipografía Moderna para el cuerpo */
     font-family: 'Montserrat', sans-serif;
     color: var(--texto);
     line-height: 1.6;
@@ -36,6 +37,10 @@ h1, h2, .date {
     font-weight: 400;
     letter-spacing: 1px;
     margin-bottom: 20px;
+}
+
+.bienvenida{
+ line-height: 30px;
 }
 
 /* SECCIONES CONTENEDORAS */
@@ -59,15 +64,15 @@ h1, h2, .date {
 }
 
 .fotomaton {
-    width: 85%;
-    max-width: 320px;
+    width: 80%;
+    max-width: 300px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     transform: rotate(-2deg);
     margin-bottom: 5px;
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     color: var(--blanco);
     margin-bottom: 0px;
 }
@@ -128,6 +133,7 @@ button#btn-search, button#btn-submit {
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btn-secundario {
@@ -140,6 +146,7 @@ button#btn-search, button#btn-submit {
     border-radius: 30px;
     font-weight: 600;
     font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .iban-box {
@@ -148,13 +155,46 @@ button#btn-search, button#btn-submit {
     border-radius: 15px;
     border: 1px dashed var(--naranja);
     margin: 20px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-group{
+    text-align: left;
+}
+
+.checkbox-wrapper{
+    margin-bottom: 10px;
+}
+/* CARRUSEL POLAROID */
+.polaroid-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 5px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.polaroid-carousel::-webkit-scrollbar { display: none; }
+
+.polaroid-item {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+
+}
+
+.polaroid-item img {
+    width: 100%;
+    aspect-ratio: 4 / 3; /* Formato horizontal */
+    object-fit: cover;
 }
 
 footer {
     padding: 10px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     opacity: 0.7;
     text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* AJUSTES PC */

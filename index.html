@@ -18,15 +18,16 @@
 
     <header class="hero">
         <div class="hero-content">
-            <img src="fotos/fotomaton.jpeg" alt="E & L" class="fotomaton">
+            <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770844714/fotomaton_aakpn4.jpg" alt="E & L" class="fotomaton" id="hero-photo">
             <h1 id="hero-title">E & L</h1>
             <p class="date">12 . 09 . 2026</p>
+            <h2 id="rsvp-greeting" style="display:none;"></h2>
             <div id="countdown" class="countdown"></div>
         </div>
     </header>
 
     <section id="access-section" class="section-container">
-        <h2 id="welcome-msg">¡Hola! Estamos felices de que estés aquí.</h2>
+        <h2 id="welcome-msg" class="bienvenida">¡Hola! Estamos felices de que estés aquí.</h2>
         <div class="search-box">
             <input type="text" id="guestInput" placeholder="Introduce tu nombre y apellidos">
             <button onclick="validateGuest()" id="btn-search">Descubrir mi invitación</button>
@@ -35,77 +36,87 @@
     </section>
 
     <main id="main-content" style="display:none;">
-        
+                    <div class="polaroid-carousel">
+                <div class="polaroid-item">
+                    <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770846947/1_yhb1qm.png" alt="Urbino">
+                </div>
+                <div class="polaroid-item">
+                    <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770846948/3_vodkbj.png" alt="Nuestra historia">
+                </div>
+                <div class="polaroid-item">
+                    <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770846947/4_ojc7rp.png" alt="Erasmus">
+                </div>
+            </div>
         <section class="section-container story">
-            <img src="icono-vespa.png" class="icon-hand"> 
-            <h2 id="story-title">Donde todo empezó...</h2>
-            <p id="story-text">Nuestra historia no se entiende sin un mapa, un idioma compartido y aquel Erasmus en Urbino...</p>
+
+            <p id="story-text" class="text-justified"></p>
         </section>
 
-        <section class="section-container rsvp">
-            <h2 id="rsvp-greeting"></h2> 
-            <form id="rsvp-form">
-                <div class="form-group">
-                    <label id="label-attendance">¿Vienes?</label>
-                    <select name="attendance" required>
-                        <option value="si" id="opt-yes">¡Allí estaré!</option>
-                        <option value="no" id="opt-no">No puedo, me lo pierdo</option>
-                    </select>
-                </div>
+<section class="section-container rsvp">
+    <form id="rsvp-form">
+        <div class="form-group">
+            <label id="label-attendance">¿Vienes?</label>
+            <select name="attendance" id="main-attendance" required onchange="toggleGuestFields()">
+                <option value="si" id="opt-yes">¡Allí estaré!</option>
+                <option value="no" id="opt-no">No puedo, me lo pierdo</option>
+            </select>
+        </div>
 
-                <div class="form-group">
-                    <label id="label-bus">¿Necesitarás autobús?</label>
-                    <input type="checkbox" name="bus">
-                </div>
+        <div id="guests-container"></div>
 
-                <div class="form-group">
-                    <label id="label-allergies">Alergias o restricciones:</label>
-                    <textarea name="allergies" rows="2"></textarea>
-                </div>
+        <div class="form-group">
+            <label id="label-bus">¿Necesitaréis plaza en el autobús?</label>
+            <select name="bus" required>
+                <option value="no">No, gracias</option>
+                <option value="si">Sí, la necesitamos</option>
+            </select>
+        </div>
 
-                <div class="form-group">
-                    <label id="label-song">Canción imprescindible:</label>
-                    <input type="text" name="song">
-                </div>
+        <div class="form-group">
+            <label id="label-hotel">¿Queréis que contactemos con el hotel por vosotros?</label>
+            <select name="hotel" required>
+                <option value="no">No, lo gestionamos nosotros</option>
+                <option value="si">Sí, por favor</option>
+            </select>
+        </div>
 
-                <button type="submit" id="btn-submit">Confirmar</button>
-            </form>
-        </section>
+        <div class="form-group">
+            <label id="label-song">Canción imprescindible:</label>
+            <input type="text" name="song">
+        </div>
+
+        <button type="submit" id="btn-submit">Confirmar</button>
+    </form>
+</section>
 
         <section class="section-container">
-            <img src="icono-hoja.png" class="icon-hand">
-            <h2 id="location-title">Naturaleza en estado puro</h2>
-            <p id="location-text">Nos casamos en Casa Catani, Barisano...</p>
+            <h2 id="location-title"></h2>
+            <p id="location-text"></p>
             <a href="#" target="_blank" class="btn-secundario" id="btn-map">Ver mapa</a>
         </section>
 
         <section class="section-container">
-            <img src="icono-avion.png" class="icon-hand">
-            <h2 id="travel-title">Consejos para el viaje</h2>
-            <p id="travel-text">El aeropuerto más cercano es Bolonia...</p>
+            <h2 id="travel-title"></h2>
+            <p id="travel-text"></p>
         </section>
 
         <section class="section-container">
-            <h2 id="dress-title">Dress Code</h2>
-            <p id="dress-text">Elegante y cómodo. Siéntete libre.</p>
+            <h2 id="dress-title"></h2>
+            <p id="dress-text"></p>
         </section>
 
         <section class="section-container gift">
-            <h2 id="gift-title">Un detalle para nosotros</h2>
-            <p id="gift-text">Vuestra presencia es nuestro mejor regalo...</p>
+            <h2 id="gift-title"></h2>
+            <p id="gift-text"></p>
             <div class="iban-box">
                 <small>IBAN:</small>
                 <p>ESXX XXXX XXXX XXXX XXXX</p>
             </div>
-            <p id="thanks-text">Gracias por formar parte del viaje.</p>
+            <p id="thanks-text"></p>
         </section>
-
     </main>
 
-    <footer>
-        <p>E & L | 2026</p>
-    </footer>
-
+    <footer><p>E & L | 2026</p></footer>
     <script src="app.js"></script>
 </body>
 </html>

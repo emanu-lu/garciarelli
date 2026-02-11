@@ -1,0 +1,193 @@
+/* VARIABLES Y PALETA DE COLORES */
+:root {
+    --naranja: #E67E22; /* El color de tu Save the Date */
+    --crema: #FFFBF5;   /* Fondo suave */
+    --texto: #2C3E50;   /* Gris azulado oscuro para lectura */
+    --blanco: #FFFFFF;
+    --borde: #D1D1D1;
+}
+
+/* RESET BÁSICO */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Georgia, serif; /* Mezcla de limpia y elegante */
+    background-color: var(--crema);
+    color: var(--texto);
+    line-height: 1.6;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* NAVEGACIÓN DE IDIOMA */
+.language-picker {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+}
+
+.language-picker button {
+    background: var(--blanco);
+    border: 1.5px solid var(--naranja);
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--naranja);
+    transition: 0.3s;
+}
+
+.language-picker button:hover {
+    background: var(--naranja);
+    color: var(--blanco);
+}
+
+/* SECCIONES CONTENEDORAS */
+.section-container {
+    padding: 60px 25px;
+    max-width: 500px; /* Ideal para lectura en móvil */
+    margin: 0 auto;
+}
+
+/* HERO SECTION */
+.hero {
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.fotomaton {
+    width: 85%;
+    max-width: 320px;
+    border: 12px solid var(--blanco);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transform: rotate(-2deg); /* Efecto foto física */
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    color: var(--naranja);
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.date {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.countdown {
+    font-weight: bold;
+    color: var(--naranja);
+    font-size: 1rem;
+}
+
+/* BUSCADOR DE INVITADOS */
+.search-box {
+    margin-top: 20px;
+}
+
+input[type="text"], 
+textarea, 
+select {
+    width: 100%;
+    padding: 15px;
+    border: 1.5px solid var(--borde);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--naranja);
+}
+
+button#btn-search, 
+button#btn-submit {
+    width: 100%;
+    background-color: var(--naranja);
+    color: var(--blanco);
+    padding: 16px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);
+}
+
+/* ICONOS "HAND-DRAWN" */
+.icon-hand {
+    width: 60px;
+    height: auto;
+    margin-bottom: 15px;
+    /* Si tus iconos son negros, puedes teñirlos de naranja con filtros: */
+    /* filter: sepia(1) saturate(5) hue-rotate(10deg); */
+}
+
+/* FORMULARIO RSVP */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* LOGÍSTICA Y BOTONES SECUNDARIOS */
+.btn-secundario {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: 1.5px solid var(--naranja);
+    color: var(--naranja);
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+/* SECCIÓN REGALO (IBAN) */
+.iban-box {
+    background-color: var(--blanco);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px dashed var(--naranja);
+    margin: 20px 0;
+}
+
+.iban-box p {
+    font-family: monospace;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+footer {
+    padding: 40px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* AJUSTES PARA PANTALLAS GRANDES (TABLET/PC) */
+@media (min-width: 768px) {
+    .section-container {
+        max-width: 650px;
+    }
+    h1 {
+        font-size: 4rem;
+    }
+}

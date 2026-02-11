@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E & L | 12.09.26</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="language-picker">
+        <button onclick="setLanguage('es')">ES</button>
+        <button onclick="setLanguage('it')">IT</button>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <img src="/fotos/fotomaton.jpeg" alt="E & L" class="fotomaton">
+            <h1 id="hero-title">E & L</h1>
+            <p class="date">12 . 09 . 2026</p>
+            <div id="countdown" class="countdown"></div>
+        </div>
+    </header>
+
+    <section id="access-section" class="section-container">
+        <h2 id="welcome-msg">¡Hola! Estamos felices de que estés aquí.</h2>
+        <div class="search-box">
+            <input type="text" id="guestInput" placeholder="Introduce tu nombre y apellidos">
+            <button onclick="validateGuest()" id="btn-search">Descubrir mi invitación</button>
+        </div>
+        <p id="error-msg" style="display:none; color: red;"></p>
+    </section>
+
+    <main id="main-content" style="display:none;">
+        
+        <section class="section-container story">
+            <img src="icono-vespa.png" class="icon-hand"> <h2 id="story-title">Donde todo empezó...</h2>
+            <p id="story-text">Nuestra historia no se entiende sin un mapa, un idioma compartido y aquel Erasmus en Urbino...</p>
+        </section>
+
+        <section class="section-container rsvp">
+            <h2 id="rsvp-greeting"></h2> <form id="rsvp-form">
+                <div class="form-group">
+                    <label id="label-attendance">¿Vienes?</label>
+                    <select name="attendance" required>
+                        <option value="si" id="opt-yes">¡Allí estaré!</option>
+                        <option value="no" id="opt-no">No puedo, me lo pierdo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-bus">¿Necesitarás autobús?</label>
+                    <input type="checkbox" name="bus">
+                </div>
+
+                <div class="form-group">
+                    <label id="label-allergies">Alergias o restricciones:</label>
+                    <textarea name="allergies" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-song">Canción imprescindible:</label>
+                    <input type="text" name="song">
+                </div>
+
+                <button type="submit" id="btn-submit">Confirmar</button>
+            </form>
+        </section>
+
+        <section class="section-container">
+            <img src="icono-hoja.png" class="icon-hand">
+            <h2 id="location-title">Naturaleza en estado puro</h2>
+            <p id="location-text">Nos casamos en Casa Catani, Barisano...</p>
+            <a href="URL_GOOGLE_MAPS" target="_blank" class="btn-secundario" id="btn-map">Ver mapa</a>
+        </section>
+
+        <section class="section-container">
+            <img src="icono-avion.png" class="icon-hand">
+            <h2 id="travel-title">Consejos para el viaje</h2>
+            <p id="travel-text">El aeropuerto más cercano es Bolonia...</p>
+        </section>
+
+        <section class="section-container">
+            <h2 id="dress-title">Dress Code</h2>
+            <p id="dress-text">Elegante y cómodo. Siéntete libre.</p>
+        </section>
+
+        <section class="section-container gift">
+            <h2 id="gift-title">Un detalle para nosotros</h2>
+            <p id="gift-text">Vuestra presencia es nuestro mejor regalo...</p>
+            <div class="iban-box">
+                <small>IBAN:</small>
+                <p>ESXX XXXX XXXX XXXX XXXX</p>
+            </div>
+            <p id="thanks-text">Gracias por formar parte del viaje.</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>E & L | 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

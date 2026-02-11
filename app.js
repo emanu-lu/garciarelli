@@ -59,20 +59,20 @@ const invitados = [
 ];
 
 
-// 2. DICCIONARIO DE IDIOMAS
+// 2. DICCIONARIO DE IDIOMAS ACTUALIZADO
 const i18n = {
     es: {
         "welcome-msg": "¡Hola! Estamos felices de que estés aquí.",
         "btn-search": "Descubrir mi invitación",
         "story-text": "Nuestra historia no se entiende sin un mapa, un idioma compartido y aquel Erasmus en Urbino. Queremos celebrar que, después de tantos viajes y kilómetros, nuestro destino favorito sigue siendo estar juntos. ¡Gracias por acompañarnos!",
         "rsvp-reserva": "¡Hola {name}! Hemos reservado {n} puesto(s) para ti.",
-        "label-attendance": "¿Vienes?",
+        "label-attendance": "¿Asistirá?",
         "opt-yes": "¡Allí estaré!",
         "opt-no": "No puedo, me lo pierdo",
-        "label-bus": "¿Necesitarás plaza en el autobús?",
-        "label-hotel": "¿Queréis que contactemos con el hotel por vosotros?",
-        "label-allergies": "¿Tienes alguna alergia o restricción alimentaria?",
-        "label-song": "Esa canción que no puede faltar:",
+        "label-bus": "¿Necesitará autobús?",
+        "label-hotel": "¿Necesitará hotel?",
+        "label-allergies": "¿Tiene alguna alergia o restricción?",
+        "label-song": "Canción imprescindible para la fiesta:",
         "btn-submit": "Confirmar",
         "location-title": "Naturaleza en estado puro",
         "location-text": "Nos casamos en Casa Catani, Barisano. Queremos disfrutar del aire libre y la buena compañía.",
@@ -85,24 +85,21 @@ const i18n = {
         "thanks-text": "Gracias por formar parte del viaje.",
         "error-msg": "No encontramos ese nombre. Revisa si está bien escrito.",
         "guestInput": "Introduce tu nombre y apellidos",
-        "extra-guest-title": "Acompañante {i}",
+        "extra-guest-title": "Invitad@ {i}",
         "extra-name": "Nombre completo:",
-        "extra-allergies": "Alergias o restricciones:",
-        "extra-bus": "¿Necesitará autobús?",
-        "extra-hotel": "¿Necesitará hotel?",
         "select-no": "No",
         "select-yes": "Sí"
     },
     it: {
         "welcome-msg": "Ciao! Siamo felici che tu sia qui.",
         "btn-search": "Scopri il mio invito",
-        "story-text": "La nostra historia non si capisce senza una mappa, una lingua condivisa e quell'Erasmus a Urbino. Vogliamo festeggiare che la nostra destinazione preferita rimane stare insieme.",
+        "story-text": "La nostra storia non si capisce senza una mappa, una lingua condivisa e quell'Erasmus a Urbino. Vogliamo festeggiare che la nostra destinazione preferita rimane stare insieme.",
         "rsvp-reserva": "Ciao {name}! Abbiamo riservato {n} posto/i per te.",
-        "label-attendance": "Ci sarai?",
+        "label-attendance": "Parteciperà?",
         "opt-yes": "Ci sarò!",
         "opt-no": "Non posso, mi dispiace",
-        "label-bus": "Avrete bisogno del pullman?",
-        "label-hotel": "Volete che contattiamo l'hotel per voi?",
+        "label-bus": "Avrà bisogno del pullman?",
+        "label-hotel": "Avrà bisogno dell'hotel?",
         "label-allergies": "Hai qualche allergia o restrizione?",
         "label-song": "Quella canzone che non può mancare:",
         "btn-submit": "Conferma",
@@ -117,11 +114,8 @@ const i18n = {
         "thanks-text": "Grazie per far parte del viaggio.",
         "error-msg": "Nome non trovato. Controlla se è scritto correttamente.",
         "guestInput": "Inserisci il tuo nome e cognome",
-        "extra-guest-title": "Accompagnatore {i}",
+        "extra-guest-title": "Ospite {i}",
         "extra-name": "Nome completo:",
-        "extra-allergies": "Allergie o restrizioni:",
-        "extra-bus": "Avrà bisogno del pullman?",
-        "extra-hotel": "Avrà bisogno dell'hotel?",
         "select-no": "No",
         "select-yes": "Sì"
     }
@@ -129,15 +123,16 @@ const i18n = {
 
 let currentLang = 'es';
 let invitadoActual = null;
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWh6uPbRwzHgW66AUbvat52McQmCG17BTwD1LwfRE1Fb_b0dBZ4UrB3waNp7x5731p/exec"; 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTYckj3NvUXX0Xn5uw3R36s0Sd0GYFvM3O4NCbv_alr80IYIaWGW14KIaCbW1SoP2V/exec"; // REEMPLAZAR CON TU URL REAL
 
+// 3. FUNCIONES DE IDIOMA Y VALIDACIÓN
 function setLanguage(lang) {
     currentLang = lang;
     const t = i18n[lang];
     for (let key in t) {
         let el = document.getElementById(key);
         if (el) {
-            if (el.id === 'guestInput') el.placeholder = t[key];
+            if (el.tagName === 'INPUT') el.placeholder = t[key];
             else el.innerText = t[key];
         }
     }
@@ -155,8 +150,9 @@ function validateGuest() {
         document.getElementById('hero-photo').style.display = 'none'; 
         document.getElementById('main-content').style.display = 'block';
         document.getElementById('rsvp-greeting').style.display = 'block'; 
+        
         setLanguage(guest.idioma);
-        toggleGuestFields(); 
+        toggleGuestFields(); // Genera los formularios clonados
     } else {
         const errorMsg = document.getElementById('error-msg');
         errorMsg.innerText = i18n[currentLang]["error-msg"];
@@ -164,40 +160,54 @@ function validateGuest() {
     }
 }
 
+// 4. GENERACIÓN DINÁMICA DE FORMULARIOS CLONADOS
 function toggleGuestFields() {
     const container = document.getElementById('guests-container');
-    const attendance = document.getElementById('main-attendance').value;
     const t = i18n[currentLang];
     container.innerHTML = ''; 
 
-    if (attendance === 'si' && invitadoActual.puestos > 1) {
+    if (invitadoActual.puestos > 1) {
         for (let i = 1; i < invitadoActual.puestos; i++) {
             const guestDiv = document.createElement('div');
             guestDiv.className = 'guest-extra-fields';
             guestDiv.innerHTML = `
                 <div style="margin: 30px 0; border-top: 1px dashed var(--naranja); padding-top: 20px;">
-                    <p style="font-family: 'Playwrite CU'; color: var(--naranja); margin: 0;">${t["extra-guest-title"].replace('{i}', i)}</p>
+                    <p style="font-family: 'Playwrite CU'; color: var(--naranja); margin-bottom: 15px;">
+                        ${t["extra-guest-title"].replace('{i}', i + 1)}
+                    </p>
+                    
                     <div class="form-group">
                         <label>${t["extra-name"]}</label>
                         <input type="text" name="guest_name_${i}" required>
                     </div>
+
                     <div class="form-group">
-                        <label>${t["extra-allergies"]}</label>
-                        <textarea name="guest_allergies_${i}" rows="2"></textarea>
+                        <label>${t["label-attendance"]}</label>
+                        <select name="guest_attendance_${i}" required>
+                            <option value="si">${t["opt-yes"]}</option>
+                            <option value="no">${t["opt-no"]}</option>
+                        </select>
                     </div>
+
                     <div class="form-group">
-                        <label>${t["extra-bus"]}</label>
+                        <label>${t["label-bus"]}</label>
                         <select name="guest_bus_${i}" required>
                             <option value="no">${t["select-no"]}</option>
                             <option value="si">${t["select-yes"]}</option>
                         </select>
                     </div>
+
                     <div class="form-group">
-                        <label>${t["extra-hotel"]}</label>
+                        <label>${t["label-hotel"]}</label>
                         <select name="guest_hotel_${i}" required>
                             <option value="no">${t["select-no"]}</option>
                             <option value="si">${t["select-yes"]}</option>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>${t["label-allergies"]}</label>
+                        <textarea name="guest_allergies_${i}" rows="2"></textarea>
                     </div>
                 </div>
             `;
@@ -220,6 +230,7 @@ function updateCountdown() {
     document.getElementById('countdown').innerText = `Faltan ${days} días / Mancano ${days} giorni`;
 }
 
+// 5. ENVÍO DE DATOS AL SPREADSHEET
 document.getElementById('rsvp-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const btn = document.getElementById('btn-submit');

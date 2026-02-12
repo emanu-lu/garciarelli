@@ -1,3 +1,4 @@
+// 1. LISTADO DE INVITADOS
 const invitados = [
     { nombre: "Sara Ferrotti", puestos: 1, idioma: "it" },
     { nombre: "Gianluca Ceccarrelli", puestos: 1, idioma: "it" },
@@ -58,14 +59,14 @@ const invitados = [
     { nombre: "tex", puestos: 1, idioma: "it" }
 ];
 
-
-// 2. DICCIONARIO DE IDIOMAS ACTUALIZADO
+// 2. DICCIONARIO DE IDIOMAS
 const i18n = {
     es: {
         "welcome-msg": "¡Hola! Estamos felices de que estés aquí.",
         "btn-search": "Descubrir mi invitación",
         "story-text": "Nuestra historia no se entiende sin un mapa, un idioma compartido y aquel Erasmus en Urbino. Queremos celebrar que, después de tantos viajes y kilómetros, nuestro destino favorito sigue siendo estar juntos. ¡Gracias por acompañarnos!",
         "rsvp-reserva": "¡Hola {name}! Hemos reservado {n} puesto(s) para ti.",
+        "btn-open-rsvp": "Confirmar asistencia",
         "label-attendance": "¿Asistirá?",
         "opt-yes": "¡Allí estaré!",
         "opt-no": "No puedo, me lo pierdo",
@@ -74,9 +75,9 @@ const i18n = {
         "label-allergies": "¿Tiene alguna alergia o restricción?",
         "label-song": "Canción imprescindible para la fiesta:",
         "btn-submit": "Confirmar",
-        "location-title": "Naturaleza en estado puro",
+        "location-title": "El plan",
         "location-text": "Nos casamos en Casa Catani, Barisano. Queremos disfrutar del aire libre y la buena compañía.",
-        "travel-title": "Consejos para el viaje",
+        "travel-title": "El viaje",
         "travel-text": "Aeropuerto de Boloña (BLQ). El Marconi Express os lleva a la estación central. Trenes a Forlì cada 30 min.",
         "dress-title": "Dress Code",
         "dress-text": "Elegante y cómodo. Estaremos en el césped, elige bien tu calzado.",
@@ -88,13 +89,17 @@ const i18n = {
         "extra-guest-title": "Invitad@ {i}",
         "extra-name": "Nombre completo:",
         "select-no": "No",
-        "select-yes": "Sí"
+        "select-yes": "Sí",
+        "sending": "Enviando...",
+        "sent-ok": "¡Datos guardados! Gracias.",
+        "sent-error": "Error al enviar. Inténtalo de nuevo."
     },
     it: {
         "welcome-msg": "Ciao! Siamo felici che tu sia qui.",
         "btn-search": "Scopri il mio invito",
-        "story-text": "La nostra storia non si capisce senza una mappa, una lingua condivisa e quell'Erasmus a Urbino. Vogliamo festeggiare che la nostra destinazione preferita rimane stare insieme.",
+        "story-text": "La nostra historia non si capisce senza una mappa, una lingua condivisa e quell'Erasmus a Urbino. Vogliamo festeggiare che la nostra destinazione preferita rimane stare insieme.",
         "rsvp-reserva": "Ciao {name}! Abbiamo riservato {n} posto/i per te.",
+        "btn-open-rsvp": "Conferma partecipazione",
         "label-attendance": "Parteciperà?",
         "opt-yes": "Ci sarò!",
         "opt-no": "Non posso, mi dispiace",
@@ -117,13 +122,21 @@ const i18n = {
         "extra-guest-title": "Ospite {i}",
         "extra-name": "Nome completo:",
         "select-no": "No",
-        "select-yes": "Sì"
+        "select-yes": "Sì",
+        "sending": "Invio in corso...",
+        "sent-ok": "Dati salvati! Grazie.",
+        "sent-error": "Errore durante l'invio. Riprova."
     }
 };
 
 let currentLang = 'es';
 let invitadoActual = null;
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTYckj3NvUXX0Xn5uw3R36s0Sd0GYFvM3O4NCbv_alr80IYIaWGW14KIaCbW1SoP2V/exec"; // REEMPLAZAR CON TU URL REAL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTYckj3NvUXX0Xn5uw3R36s0Sd0GYFvM3O4NCbv_alr80IYIaWGW14KIaCbW1SoP2V/exec";
+
+// Elementos del Modal
+const modal = document.getElementById("rsvp-modal");
+const btnOpenModal = document.getElementById("open-rsvp-modal");
+const spanClose = document.getElementsByClassName("close-modal")[0];
 
 // 3. FUNCIONES DE IDIOMA Y VALIDACIÓN
 function setLanguage(lang) {
@@ -136,6 +149,9 @@ function setLanguage(lang) {
             else el.innerText = t[key];
         }
     }
+    // Traducir el botón del modal específicamente
+    if (btnOpenModal) btnOpenModal.innerText = t["btn-open-rsvp"];
+    
     if (invitadoActual) actualizarMensajeReserva();
 }
 
@@ -151,8 +167,11 @@ function validateGuest() {
         document.getElementById('main-content').style.display = 'block';
         document.getElementById('rsvp-greeting').style.display = 'block'; 
         
+        // Mostrar el botón para abrir el modal
+        btnOpenModal.style.display = 'inline-block';
+        
         setLanguage(guest.idioma);
-        toggleGuestFields(); // Genera los formularios clonados
+        toggleGuestFields();
     } else {
         const errorMsg = document.getElementById('error-msg');
         errorMsg.innerText = i18n[currentLang]["error-msg"];
@@ -160,7 +179,7 @@ function validateGuest() {
     }
 }
 
-// 4. GENERACIÓN DINÁMICA DE FORMULARIOS CLONADOS
+// 4. GENERACIÓN DINÁMICA DE FORMULARIOS
 function toggleGuestFields() {
     const container = document.getElementById('guests-container');
     const t = i18n[currentLang];
@@ -227,15 +246,37 @@ function updateCountdown() {
     const now = new Date().getTime();
     const diff = weddingDate - now;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    document.getElementById('countdown').innerText = `Faltan ${days} días / Mancano ${days} giorni`;
+    const el = document.getElementById('countdown');
+    if (el) el.innerText = `Faltan ${days} días / Mancano ${days} giorni`;
 }
 
-// 5. ENVÍO DE DATOS AL SPREADSHEET
+// 5. LÓGICA DEL MODAL (VENTANA EMERGENTE)
+if (btnOpenModal) {
+    btnOpenModal.onclick = function() {
+        modal.style.display = "block";
+    }
+}
+
+if (spanClose) {
+    spanClose.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// 6. ENVÍO DE DATOS
 document.getElementById('rsvp-form').addEventListener('submit', function(e) {
     e.preventDefault();
+    const t = i18n[currentLang];
     const btn = document.getElementById('btn-submit');
     const originalText = btn.innerText;
-    btn.innerText = "Enviando...";
+    
+    btn.innerText = t["sending"];
     btn.disabled = true;
 
     const formData = new FormData(e.target);
@@ -248,12 +289,15 @@ document.getElementById('rsvp-form').addEventListener('submit', function(e) {
         body: JSON.stringify(data)
     })
     .then(() => {
-        alert(currentLang === 'es' ? "¡Datos guardados! Gracias." : "Dati salvati! Grazie.");
-        btn.innerText = "Confirmado";
+        alert(t["sent-ok"]);
+        btn.innerText = t["btn-submit"];
+        btn.disabled = false;
+        // Cerrar modal automáticamente tras el éxito
+        setTimeout(() => { modal.style.display = "none"; }, 1000);
     })
     .catch(error => {
         console.error('Error:', error);
-        alert("Error al enviar. Inténtalo de nuevo.");
+        alert(t["sent-error"]);
         btn.innerText = originalText;
         btn.disabled = false;
     });

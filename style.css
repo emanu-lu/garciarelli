@@ -24,7 +24,7 @@ body {
     /* Transición suave para el cambio de fondo */
     transition: background-image 1s ease-in-out;
     
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Manrope', sans-serif;
     color: var(--texto);
     line-height: 1.6;
     text-align: center;
@@ -32,8 +32,8 @@ body {
 }
 
 /* Títulos con tipografía elegante Prata */
-h1, h2, .date {
-    font-family: 'Prata', serif;
+h1, .date {
+    font-family: 'Playfair Display', serif;
     font-weight: 400;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -41,6 +41,8 @@ h1, h2, .date {
 
 .bienvenida{
  line-height: 30px;
+ padding: 20px;
+ color: var(--blanco)
 }
 
 /* SECCIONES CONTENEDORAS */
@@ -49,18 +51,21 @@ h1, h2, .date {
     max-width: 500px;
     margin: auto;
     margin-bottom: 20px;
-    width: 90%; /* Asegura margen lateral en pantallas pequeñas */
+    width: 100%; /* Asegura margen lateral en pantallas pequeñas */
     
     /* Fondo semi-transparente para leer bien sobre la textura */
     background-color: rgba(255, 251, 245, 0.5);
-    border-radius: 10px;
+
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 /* HERO SECTION */
 .hero {
     padding-top: 40px;
-    padding-bottom: 10px;
+}
+.hero-content{
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .fotomaton {
@@ -79,7 +84,7 @@ h1 {
 
 .date {
     font-size: 1.2rem;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .countdown {
@@ -92,24 +97,34 @@ h1 {
 
 /* NAVEGACIÓN Y BOTONES */
 .language-picker {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1000;
-    display: flex;
-    gap: 8px;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 10;
 }
 
 .language-picker button {
-    background: var(--blanco);
-    border: 1.5px solid var(--naranja);
-    padding: 6px 12px;
+    background: none;
+    border: none;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--blanco);
+    opacity: 0.8;
     cursor: pointer;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: var(--naranja);
-    transition: 0.3s;
+    padding: 5px;
+}
+
+.text-justified{
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.8;
+
+}
+
+.search-box{
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 input[type="text"], textarea, select {
@@ -118,14 +133,14 @@ input[type="text"], textarea, select {
     border: 1.5px solid var(--borde);
     border-radius: 10px;
     margin-bottom: 15px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 button#btn-search, button#btn-submit {
     width: 100%;
-    background-color: var(--blanco);
+    background-color:rgba(255, 255, 255, 0.379);
     color: var(--texto);
-    padding: 16px;
+    padding: 15px;
     border: none;
     border-radius: 10px;
     font-size: 1rem;
@@ -133,20 +148,20 @@ button#btn-search, button#btn-submit {
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .btn-secundario {
     display: inline-block;
     margin-top: 15px;
-    padding: 12px 30px;
+    padding: 10px 30px;
     border: 1.5px solid var(--naranja);
     color: var(--naranja);
     text-decoration: none;
     border-radius: 30px;
     font-weight: 600;
     font-size: 0.9rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .iban-box {
@@ -155,7 +170,7 @@ button#btn-search, button#btn-submit {
     border-radius: 15px;
     border: 1px dashed var(--naranja);
     margin: 20px 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .form-group{
@@ -195,6 +210,205 @@ footer {
     opacity: 0.7;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
+}
+
+/* Estilos para el Modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6); /* Fondo oscurecido */
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--crema);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto; /* Permite scroll si el formulario es largo */
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--naranja);
+}
+
+/* Ajuste para el botón de apertura */
+#open-rsvp-modal {
+    margin-top: 20px;
+    background: var(--blanco);
+    cursor: pointer;
+}
+
+/* =========================
+   CRONOGRAMA – EL PLAN
+========================= */
+
+.timeline {
+    margin-top: 40px;
+    text-align: left;
+
+}
+
+.timeline__list {
+    position: relative;
+    margin-left: 30px;
+    padding-left: 30px;
+    border-left: 2px solid var(--naranja);
+}
+
+.timeline__item {
+    position: relative;
+    margin-bottom: 35px;
+    padding-bottom: 10px;
+}
+
+/* Punto elegante */
+.timeline__item::before {
+    content: '';
+    position: absolute;
+    left: -41px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--crema);
+    border: 2px solid var(--naranja);
+}
+
+/* Hora */
+.timeline__time {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--naranja);
+    margin-bottom: 6px;
+}
+
+/* Título evento */
+.timeline__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    color: var(--texto);
+}
+
+/* Descripción */
+.timeline__desc {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+/* Línea final más sutil */
+.timeline__item:last-child {
+margin-bottom: 10%;
+}
+
+/* =========================
+   NUEVO ESTILO CARDS VIAJE
+========================= */
+
+.logistics-grid {
+    display: grid;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Card estilo editorial */
+.photo-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    transition: all 0.35s ease;
+    text-align: left;
+}
+
+/* Hover más elegante */
+.photo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+}
+
+/* Imagen más estética */
+.photo-card__img {
+    height: 220px;
+    overflow: hidden;
+}
+
+.photo-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+/* Zoom suave al pasar el ratón */
+.photo-card:hover .photo-card__img img {
+    transform: scale(1.05);
+}
+
+/* Contenido más minimal */
+.photo-card__content {
+    padding: 25px;
+}
+
+.card__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--texto);
+}
+
+.card__text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+/* Separación visual entre imagen y texto */
+.photo-card__content::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--naranja);
+    margin-bottom: 15px;
+}
+
+.map-container {
+    text-align: center;
+    padding: 1.5rem;
+    background: #fff; /* Fondo blanco si lo quieres destacar */
+}
+.paper-card {
+    background-color: var(--color-card);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.titulos-card{
+    margin-top: 10%;
+    font-size: 2rem;
+    
 }
 
 /* AJUSTES PC */

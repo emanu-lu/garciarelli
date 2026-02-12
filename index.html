@@ -6,7 +6,7 @@
     <title>E & L | 12.09.26</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Prata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,25 +17,74 @@
     </nav>
 
     <header class="hero">
-        <div class="hero-content">
-            <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770844714/fotomaton_aakpn4.jpg" alt="E & L" class="fotomaton" id="hero-photo">
-            <h1 id="hero-title">E & L</h1>
-            <p class="date">12 . 09 . 2026</p>
-            <h2 id="rsvp-greeting" style="display:none;"></h2>
-            <div id="countdown" class="countdown"></div>
-        </div>
-    </header>
-
-    <section id="access-section" class="section-container">
-        <h2 id="welcome-msg" class="bienvenida">¡Hola! Estamos felices de que estés aquí.</h2>
+    <div class="hero-content">
+        <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770844714/fotomaton_aakpn4.jpg" alt="E & L" class="fotomaton" id="hero-photo">
+        <h1 id="hero-title">E & L</h1>
+        <p class="date">12 . 09 . 2026</p>
+        <h2 id="rsvp-greeting" style="display:none;"></h2>
+        <button id="open-rsvp-modal" style="display:none;" class="btn-secundario">Confirmar asistencia</button>
+    </div>
+</header>
+    
+    <section id="access-section">
+        <h2 id="welcome-msg" class="bienvenida">Deseando compartir este momento contigo</h2>
         <div class="search-box">
             <input type="text" id="guestInput" placeholder="Introduce tu nombre y apellidos">
             <button onclick="validateGuest()" id="btn-search">Descubrir mi invitación</button>
         </div>
         <p id="error-msg" style="display:none; color: red;"></p>
     </section>
+    <div id="rsvp-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <section class="rsvp">
+            <form id="rsvp-form">
+                <p style="font-family: 'Playwrite CU'; color: var(--naranja); margin-bottom: 15px;">Invitad@ 1</p>
+                
+                <div class="form-group">
+                    <label id="label-attendance">¿Vienes?</label>
+                    <select name="attendance" id="main-attendance" required>
+                        <option value="si" id="opt-yes">¡Allí estaré!</option>
+                        <option value="no" id="opt-no">No puedo, me lo pierdo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-bus">¿Necesitarás autobús?</label>
+                    <select name="bus" required>
+                        <option value="no">No</option>
+                        <option value="si">Sí</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-hotel">¿Necesitarás hotel?</label>
+                    <select name="hotel" required>
+                        <option value="no">No</option>
+                        <option value="si">Sí</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-allergies">Alergias o restricciones:</label>
+                    <textarea name="allergies" rows="2"></textarea>
+                </div>
+
+                <div id="guests-container"></div>
+
+                <div class="form-group" style="margin-top: 30px; border-top: 1px solid var(--borde); padding-top: 20px;">
+                    <label id="label-song">Canción imprescindible para la fiesta:</label>
+                    <input type="text" name="song">
+                </div>
+
+                <button type="submit" id="btn-submit">Confirmar</button>
+            </form>
+        </section>
+    </div>
+</div>
 
     <main id="main-content" style="display:none;">
+        <section class="section-container story">
                     <div class="polaroid-carousel">
                 <div class="polaroid-item">
                     <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770846947/1_yhb1qm.png" alt="Urbino">
@@ -47,69 +96,84 @@
                     <img src="https://res.cloudinary.com/dhryyhnig/image/upload/v1770846947/4_ojc7rp.png" alt="Erasmus">
                 </div>
             </div>
-        <section class="section-container story">
 
             <p id="story-text" class="text-justified"></p>
         </section>
 
-<section class="section-container rsvp">
-<form id="rsvp-form">
-    <p style="font-family: 'Playwrite CU'; color: var(--naranja); margin-bottom: 15px;">Invitad@ 1</p>
-    
-    <div class="form-group">
-        <label id="label-attendance">¿Vienes?</label>
-        <select name="attendance" id="main-attendance" required>
-            <option value="si" id="opt-yes">¡Allí estaré!</option>
-            <option value="no" id="opt-no">No puedo, me lo pierdo</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label id="label-bus">¿Necesitarás autobús?</label>
-        <select name="bus" required>
-            <option value="no">No</option>
-            <option value="si">Sí</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label id="label-hotel">¿Necesitarás hotel?</label>
-        <select name="hotel" required>
-            <option value="no">No</option>
-            <option value="si">Sí</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label id="label-allergies">Alergias o restricciones:</label>
-        <textarea name="allergies" rows="2"></textarea>
-    </div>
-
-    <div id="guests-container"></div>
-
-    <div class="form-group" style="margin-top: 30px; border-top: 1px solid var(--borde); padding-top: 20px;">
-        <label id="label-song">Canción imprescindible para la fiesta:</label>
-        <input type="text" name="song">
-    </div>
-
-    <button type="submit" id="btn-submit">Confirmar</button>
-</form>
-</section>
-
         <section class="section-container">
             <h2 id="location-title"></h2>
-            <p id="location-text"></p>
-            <a href="#" target="_blank" class="btn-secundario" id="btn-map">Ver mapa</a>
+            <section class="timeline container">
+            <div class="timeline__list">
+                <article class="timeline__item">
+                    <div class="timeline__time">17:00</div>
+                    <div class="timeline__content">
+                        <h3 class="timeline__title">Ceremonia</h3>
+                        <p class="timeline__desc">Casa Catani</p>
+                    </div>
+                </article>
+                <article class="timeline__item">
+                    <div class="timeline__time">18:30</div>
+                    <div class="timeline__content">
+                        <h3 class="timeline__title">Aperitivo & Fiesta</h3>
+                        <p class="timeline__desc">Sin desplazamientos</p>
+                    </div>
+                </article>
+                <article class="timeline__item">
+                    <div class="timeline__time">TBC</div>
+                    <div class="timeline__content">
+                        <h3 class="timeline__title">Bus de vuelta</h3>
+                        <p class="timeline__desc">Hacia el hotel oficial</p>
+                    </div>
+                </article>
+            </div>
+                            <div class="photo-card">
+                    <div class="photo-card__img">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=500&auto=format&fit=crop" alt="Hotel">
+                    </div>
+                    <div class="photo-card__content">
+                        <p id="location-text"></p>
+                        <a href="#" target="_blank" class="btn-secundario" id="btn-map">Ver mapa</a>
+                    </div>
+                </div>
+            
         </section>
 
-        <section class="section-container">
-            <h2 id="travel-title"></h2>
-            <p id="travel-text"></p>
-        </section>
 
-        <section class="section-container">
-            <h2 id="dress-title"></h2>
-            <p id="dress-text"></p>
+
+            <section class="logistics container">
+            <h2 id="travel-title" class="titulos-card"></h2>
+            <div class="logistics-grid">
+                
+                <div class="photo-card">
+                    <div class="photo-card__img">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=500&auto=format&fit=crop" alt="Hotel">
+                    </div>
+                    <div class="photo-card__content">
+                        <h3 class="card__title">Alojamiento</h3>
+                        <p class="card__text">Estamos cerrando un hotel para todos. Os avisaremos pronto.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <div class="photo-card__img">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=500&auto=format&fit=crop" alt="Vuelos">
+                    </div>
+                    <div class="photo-card__content">
+                        <h3 class="card__title">Vuelos</h3>
+                        <p class="card__text">Aeropuerto recomendado: Bolonia (BLQ).</p>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <div class="photo-card__img">
+                        <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=500&auto=format&fit=crop" alt="Transporte">
+                    </div>
+                    <div class="photo-card__content">
+                        <h3 class="card__title">Transporte</h3>
+                        <p id="travel-text"></p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="section-container gift">

@@ -16,15 +16,8 @@
 
 body {
     /* Fondo inicial */
-    background-image: url('https://res.cloudinary.com/dhryyhnig/image/upload/v1770844759/fondo1_vp5ney.png'); 
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    /* Transición suave para el cambio de fondo */
-    transition: background-image 1s ease-in-out;
-    
-    font-family: 'Manrope', sans-serif;
+    background-color: #FFFFFF;
+    font-family: 'Sen', sans-serif;
     color: var(--texto);
     line-height: 1.6;
     text-align: center;
@@ -33,7 +26,7 @@ body {
 
 /* Títulos con tipografía elegante Prata */
 h1, .date {
-    font-family: 'Playfair Display', serif;
+    font-family: "Reenie Beanie", cursive;
     font-weight: 400;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -61,25 +54,33 @@ h1, .date {
 
 /* HERO SECTION */
 .hero {
-    padding-top: 40px;
+    padding-top: 20px;
 }
 .hero-content{
-    padding: 10px;
+    padding: 30px;
+    margin-bottom: 10px;
+    max-width: 300px;
+    margin: auto;
     margin-bottom: 20px;
+    width: 100%; 
+    
 }
 
 .fotomaton {
     width: 80%;
     max-width: 300px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    transform: rotate(-2deg);
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    font-size: 3.2rem;
-    color: var(--blanco);
+    font-size: 2rem;
+    color: var(--naranja);
     margin-bottom: 0px;
+    font-family: "Sen",sans-serif;
+    line-height: 50px;
+    text-transform: uppercase;
+    text-align: justify;
+
 }
 
 .date {
@@ -338,6 +339,7 @@ margin-bottom: 10%;
     box-shadow: 0 15px 35px rgba(0,0,0,0.06);
     transition: all 0.35s ease;
     text-align: left;
+    
 }
 
 /* Hover más elegante */

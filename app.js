@@ -1,4 +1,4 @@
-// 1. LISTADO DE INVITADOS
+// 1. LISTADO DE INVITADOS (Igual que el original)
 const invitados = [
     { nombre: "Sara Ferrotti", puestos: 1, idioma: "it" },
     { nombre: "Gianluca Ceccarrelli", puestos: 1, idioma: "it" },
@@ -59,7 +59,7 @@ const invitados = [
     { nombre: "tex", puestos: 1, idioma: "it" }
 ];
 
-// 2. DICCIONARIO DE IDIOMAS
+// 2. DICCIONARIO DE IDIOMAS COMPLETO
 const i18n = {
     es: {
         "welcome-msg": "¡Hola! Estamos felices de que estés aquí.",
@@ -67,6 +67,7 @@ const i18n = {
         "story-text": "Nuestra historia no se entiende sin un mapa, un idioma compartido y aquel Erasmus en Urbino. Queremos celebrar que, después de tantos viajes y kilómetros, nuestro destino favorito sigue siendo estar juntos. ¡Gracias por acompañarnos!",
         "rsvp-reserva": "¡Hola {name}! Hemos reservado {n} puesto(s) para ti.",
         "btn-open-rsvp": "Confirmar asistencia",
+        "guest-1-label": "Invitad@ 1",
         "label-attendance": "¿Asistirá?",
         "opt-yes": "¡Allí estaré!",
         "opt-no": "No puedo, me lo pierdo",
@@ -77,10 +78,18 @@ const i18n = {
         "btn-submit": "Confirmar",
         "location-title": "El plan",
         "location-text": "Nos casamos en Casa Catani, Barisano. Queremos disfrutar del aire libre y la buena compañía.",
+        "ceremony-title": "Ceremonia",
+        "ceremony-desc": "Casa Catani",
+        "party-title": "Aperitivo & Fiesta",
+        "party-desc": "Sin desplazamientos",
         "travel-title": "El viaje",
         "travel-text": "Aeropuerto de Boloña (BLQ). El Marconi Express os lleva a la estación central. Trenes a Forlì cada 30 min.",
-        "dress-title": "Dress Code",
-        "dress-text": "Elegante y cómodo. Estaremos en el césped, elige bien tu calzado.",
+        "hotel-title-card": "Alojamiento",
+        "hotel-text-card": "Estamos cerrando un hotel para todos. Os avisaremos pronto.",
+        "vuelos-title": "Vuelos",
+        "vuelos-text": "Aeropuerto recomendado: Bolonia (BLQ).",
+        "transporte-title": "Transporte",
+        "btn-map": "Ver mapa",
         "gift-title": "Un detalle para nosotros",
         "gift-text": "Vuestra presencia es el mejor regalo. Si deseáis hacernos un detalle:",
         "thanks-text": "Gracias por formar parte del viaje.",
@@ -97,9 +106,10 @@ const i18n = {
     it: {
         "welcome-msg": "Ciao! Siamo felici che tu sia qui.",
         "btn-search": "Scopri il mio invito",
-        "story-text": "La nostra historia non si capisce senza una mappa, una lingua condivisa e quell'Erasmus a Urbino. Vogliamo festeggiare che la nostra destinazione preferita rimane stare insieme.",
+        "story-text": "La nostra storia non si capisce senza una mappa, una lingua condivisa e quell'Erasmus a Urbino. Vogliamo festeggiare che la nostra destinazione preferita rimane stare insieme.",
         "rsvp-reserva": "Ciao {name}! Abbiamo riservato {n} posto/i per te.",
         "btn-open-rsvp": "Conferma partecipazione",
+        "guest-1-label": "Ospite 1",
         "label-attendance": "Parteciperà?",
         "opt-yes": "Ci sarò!",
         "opt-no": "Non posso, mi dispiace",
@@ -110,14 +120,22 @@ const i18n = {
         "btn-submit": "Conferma",
         "location-title": "Natura allo stato puro",
         "location-text": "Ci sposiamo a Casa Catani, Barisano. Vogliamo godere dell'aria aperta e della buona compagnia.",
+        "ceremony-title": "Cerimonia",
+        "ceremony-desc": "Casa Catani",
+        "party-title": "Aperitivo & Festa",
+        "party-desc": "Senza spostamenti",
         "travel-title": "Consigli per il viaggio",
         "travel-text": "Aeroporto di Bologna (BLQ). Marconi Express fino alla stazione. Treni per Forlì ogni 30 min.",
-        "dress-title": "Dress Code",
-        "dress-text": "Elegante e comodo. Saremo sul prato, scegli bene le scarpe.",
+        "hotel-title-card": "Alloggio",
+        "hotel-text-card": "Stiamo definendo un hotel per tutti. Vi informeremo presto.",
+        "vuelos-title": "Voli",
+        "vuelos-text": "Aeroporto consigliato: Bologna (BLQ).",
+        "transporte-title": "Trasporto",
+        "btn-map": "Vedi mappa",
         "gift-title": "Un pensiero per noi",
         "gift-text": "La vostra presenza è il regalo più grande. Se volete farci un pensiero:",
         "thanks-text": "Grazie per far parte del viaggio.",
-        "error-msg": "Nome non trovato. Controlla se è scritto correttamente.",
+        "error-msg": "Nome non trovato. Controlla se è escrito correttamente.",
         "guestInput": "Inserisci il tuo nome e cognome",
         "extra-guest-title": "Ospite {i}",
         "extra-name": "Nome completo:",
@@ -133,12 +151,10 @@ let currentLang = 'es';
 let invitadoActual = null;
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTYckj3NvUXX0Xn5uw3R36s0Sd0GYFvM3O4NCbv_alr80IYIaWGW14KIaCbW1SoP2V/exec";
 
-// Elementos del Modal
 const modal = document.getElementById("rsvp-modal");
-const btnOpenModal = document.getElementById("open-rsvp-modal");
+const btnOpenModal = document.getElementById("btn-open-rsvp");
 const spanClose = document.getElementsByClassName("close-modal")[0];
 
-// 3. FUNCIONES DE IDIOMA Y VALIDACIÓN
 function setLanguage(lang) {
     currentLang = lang;
     const t = i18n[lang];
@@ -149,10 +165,18 @@ function setLanguage(lang) {
             else el.innerText = t[key];
         }
     }
-    // Traducir el botón del modal específicamente
+    
+    // Traducción del botón de apertura (unificado)
     if (btnOpenModal) btnOpenModal.innerText = t["btn-open-rsvp"];
     
-    if (invitadoActual) actualizarMensajeReserva();
+    // Traducción de opciones comunes por clase
+    document.querySelectorAll(".opt-no-text").forEach(el => el.innerText = t["select-no"]);
+    document.querySelectorAll(".opt-yes-text").forEach(el => el.innerText = t["select-yes"]);
+    
+    if (invitadoActual) {
+        actualizarMensajeReserva();
+        toggleGuestFields();
+    }
 }
 
 function validateGuest() {
@@ -160,18 +184,14 @@ function validateGuest() {
     const guest = invitados.find(i => i.nombre.toLowerCase() === input);
 
     if (guest) {
-        invitadoActual = guest;
-        document.body.style.backgroundImage = "url('https://res.cloudinary.com/dhryyhnig/image/upload/v1770844759/fondo2_nufgwk.png')"; 
+        invitadoActual = guest; 
         document.getElementById('access-section').style.display = 'none';
         document.getElementById('hero-photo').style.display = 'none'; 
         document.getElementById('main-content').style.display = 'block';
         document.getElementById('rsvp-greeting').style.display = 'block'; 
-        
-        // Mostrar el botón para abrir el modal
         btnOpenModal.style.display = 'inline-block';
         
         setLanguage(guest.idioma);
-        toggleGuestFields();
     } else {
         const errorMsg = document.getElementById('error-msg');
         errorMsg.innerText = i18n[currentLang]["error-msg"];
@@ -179,7 +199,6 @@ function validateGuest() {
     }
 }
 
-// 4. GENERACIÓN DINÁMICA DE FORMULARIOS
 function toggleGuestFields() {
     const container = document.getElementById('guests-container');
     const t = i18n[currentLang];
@@ -194,12 +213,10 @@ function toggleGuestFields() {
                     <p style="font-family: 'Playwrite CU'; color: var(--naranja); margin-bottom: 15px;">
                         ${t["extra-guest-title"].replace('{i}', i + 1)}
                     </p>
-                    
                     <div class="form-group">
                         <label>${t["extra-name"]}</label>
                         <input type="text" name="guest_name_${i}" required>
                     </div>
-
                     <div class="form-group">
                         <label>${t["label-attendance"]}</label>
                         <select name="guest_attendance_${i}" required>
@@ -207,7 +224,6 @@ function toggleGuestFields() {
                             <option value="no">${t["opt-no"]}</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>${t["label-bus"]}</label>
                         <select name="guest_bus_${i}" required>
@@ -215,7 +231,6 @@ function toggleGuestFields() {
                             <option value="si">${t["select-yes"]}</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>${t["label-hotel"]}</label>
                         <select name="guest_hotel_${i}" required>
@@ -223,7 +238,6 @@ function toggleGuestFields() {
                             <option value="si">${t["select-yes"]}</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>${t["label-allergies"]}</label>
                         <textarea name="guest_allergies_${i}" rows="2"></textarea>
@@ -250,32 +264,21 @@ function updateCountdown() {
     if (el) el.innerText = `Faltan ${days} días / Mancano ${days} giorni`;
 }
 
-// 5. LÓGICA DEL MODAL (VENTANA EMERGENTE)
 if (btnOpenModal) {
-    btnOpenModal.onclick = function() {
-        modal.style.display = "block";
-    }
+    btnOpenModal.onclick = function() { modal.style.display = "block"; }
 }
-
 if (spanClose) {
-    spanClose.onclick = function() {
-        modal.style.display = "none";
-    }
+    spanClose.onclick = function() { modal.style.display = "none"; }
 }
-
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+    if (event.target == modal) { modal.style.display = "none"; }
 }
 
-// 6. ENVÍO DE DATOS
 document.getElementById('rsvp-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const t = i18n[currentLang];
     const btn = document.getElementById('btn-submit');
     const originalText = btn.innerText;
-    
     btn.innerText = t["sending"];
     btn.disabled = true;
 
@@ -292,7 +295,6 @@ document.getElementById('rsvp-form').addEventListener('submit', function(e) {
         alert(t["sent-ok"]);
         btn.innerText = t["btn-submit"];
         btn.disabled = false;
-        // Cerrar modal automáticamente tras el éxito
         setTimeout(() => { modal.style.display = "none"; }, 1000);
     })
     .catch(error => {
@@ -304,3 +306,4 @@ document.getElementById('rsvp-form').addEventListener('submit', function(e) {
 });
 
 updateCountdown();
+setLanguage('es'); // Inicialización por defecto
